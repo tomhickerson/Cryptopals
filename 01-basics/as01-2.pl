@@ -1,21 +1,16 @@
 #!/usr/bin/perl
 
-use MIME::Base64;
-
-sub hextob64 {
-    my ($hex) = @_;
-
-    my $bin = pack "H*", $hex;
-    my $encoded = encode_base64($bin);
-
-    return $encoded;
-}
-
 sub fixedxor {
-    my ($string) = @_;
-    my $value = 0;
-    $value ^= $_ for unpack "C*", hextob64($string);
-    return $value;
+    my ($str1, $str2) = @_;
+    my $value = length($str1);
+    my $bin1 = pack "H*", $str1;
+    my $bin2 = pack "H*", $str2;
+    print $bin1 ^ $bin2 . "\n";
+    my $otheranswer = $bin1 ^ $bin2;
+    my $unpackedotheranswer = unpack "H*", $otheranswer;
+    #print $unpackedotheranswer . "\n";
+
+    return $unpackedotheranswer;
 }
 
 my $first = "1c0111001f010100061a024b53535009181c";
